@@ -9,6 +9,8 @@ const Quantity = document.getElementById('Quantity')
 const tableBody = document.getElementById('tableBody')
 const editStatus = document.getElementById('editStatus')
 const addProductBtn= document.getElementById('addProduct')
+const searchProduct = document.getElementById('searchProduct')
+const filtterCategory = document.getElementById('filtterCategory')
 
 if (sessionStorage.getItem('Products')) {
     Products = JSON.parse(sessionStorage.getItem('Products'))
@@ -16,6 +18,9 @@ if (sessionStorage.getItem('Products')) {
     console.log(Products);
 
 }
+//listen to the seach boxs
+searchProduct.addEventListener('input',displayProductList)
+filtterCategory.addEventListener('input',displayProductList)
 
 //getting data from the form
 productsForm.addEventListener('submit', (event) => {
@@ -52,6 +57,7 @@ productsForm.addEventListener('submit', (event) => {
             console.log(Products[editindex]);
             
                 editStatus.value =""
+                addProductBtn.innerText = "Add Product"
         }
         sessionStorage.setItem('Products', JSON.stringify(Products))
         displayProductList()
@@ -63,14 +69,22 @@ productsForm.addEventListener('submit', (event) => {
 
 
 
-    })
+    }
+  
+)
 
 //display products 
 
 function displayProductList() {
     tableBody.innerHTML = ""
+    const seachValue = searchProduct.value.toLowerCase()
+    const categoryValue = filtterCategory.value.toLowerCase()
+    console.log(seachValue,categoryValue);
+    
     Products.forEach((item, index) => {
-
+        const foundProduct = item.productName.toLowerCase().includes(seachValue)
+        const foundCategory  =item.SelectCategory.toLowerCase().includes(categoryValue)
+        if(foundProduct&&foundCategory){
         tableBody.innerHTML += `<tr>
                 <td>${index + 1}</td>
                 <td>${item.productID}</td>
@@ -82,6 +96,7 @@ function displayProductList() {
                 <button class="btn btn-danger" onclick="deleteProduct(${index})">Delete</button></td>
                 </tr>`
         console.log(item);
+        }
 
     })
 }
@@ -112,7 +127,3 @@ function editProductsDetails(editIndex) {
     addProductBtn.innerText = "Update Product"
 }
 
-//Search products 
-function seachProducts(searchProduct){
- Products.filter(items=>items['SelectCategory']=="searchProducts")
-}
