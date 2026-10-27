@@ -1,4 +1,4 @@
-let Products = []
+    let Products = []
 
 const productsForm = document.getElementById('productsForm')
 const productID = document.getElementById('productID')
@@ -86,15 +86,21 @@ function displayProductList() {
         const foundCategory  =item.SelectCategory.toLowerCase().includes(categoryValue)
         if(foundProduct&&foundCategory){
         tableBody.innerHTML += `<tr>
-                <td>${index + 1}</td>
-                <td>${item.productID}</td>
-                <td>${item.productName}</td>
-                <td>${item.SelectCategory}</td>
-                <td>${item.price}</td>
-                <td>${item.Quantity}</td>
-                <td><button class="btn btn-warning" onclick="editProductsDetails(${index})">Edit</button>
-                <button class="btn btn-danger" onclick="deleteProduct(${index})">Delete</button></td>
-                </tr>`
+                            <td class="ps-4 fw-bold text-muted">${index+1}</td>
+                            <td><span class="font-monospace fw-bold">${item.productID}</span></td>
+                            <td class="fw-medium">${item.productName}</td>
+                            <td><span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill px-3">${item.SelectCategory}</span></td>
+                            <td class="fw-semibold">${item.price}</td>
+                            <td><span class="badge bg-secondary rounded-pill">${item.Quantity}</span></td>
+                            <td class="text-end pe-4">
+                                <button onclick=editProductsDetails(${index}) class="btn btn-sm btn-outline-warning me-1">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <button onclick=deleteProduct(${index}) class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>`
         console.log(item);
         }
 
